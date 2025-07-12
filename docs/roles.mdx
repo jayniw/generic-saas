@@ -1,0 +1,36 @@
+---
+title: Roles y permisos
+---
+
+# Roles y permisos básicos
+
+Puedes gestionar roles de usuario usando la columna `role` en la tabla de usuarios de Supabase.
+
+## Ejemplo de uso
+
+```ts
+// app/api/set-role/route.ts
+import { NextRequest } from 'next/server';
+import { supabase } from '../../../lib/supabaseClient';
+
+export async function POST(req: NextRequest) {
+  const { user_id, role } = await req.json();
+  const { error } = await supabase.from('users').update({ role }).eq('id', user_id);
+  if (error) return new Response('Error', { status: 500 });
+  return new Response('OK');
+}
+```
+
+En el frontend, puedes consultar el rol del usuario autenticado y condicionar la UI según su rol.
+
+```ts
+// Obtener rol del usuario actual
+const { data: { user } } = await supabase.auth.getUser();
+// user?.role
+```
+
+Asegúrate de tener la columna `role` en tu tabla de usuarios:
+
+```sql
+alter table users add column role text default 'user';
+```

@@ -1,0 +1,30 @@
+---
+title: Invitaciones por Email
+---
+
+# Enviar invitaciones por email con Mailgun
+
+Este ejemplo muestra cómo enviar un email usando Mailgun desde una API route de Next.js:
+
+```ts
+// app/api/invite/route.ts
+import { NextRequest } from 'next/server';
+import { mg, MAILGUN_DOMAIN, MAILGUN_FROM_EMAIL } from '../../../lib/mailgun';
+
+export async function POST(req: NextRequest) {
+  const { to, subject, text } = await req.json();
+  try {
+    await mg.messages.create(MAILGUN_DOMAIN, {
+      from: MAILGUN_FROM_EMAIL,
+      to,
+      subject,
+      text,
+    });
+    return new Response('Enviado', { status: 200 });
+  } catch (e) {
+    return new Response('Error enviando email', { status: 500 });
+  }
+}
+```
+
+Puedes llamar a esta API desde tu frontend para enviar invitaciones a usuarios.

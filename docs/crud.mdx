@@ -1,0 +1,71 @@
+---
+title: CRUD Genérico
+---
+
+# CRUD Genérico con Supabase
+
+Este ejemplo muestra cómo crear, leer, actualizar y eliminar "items" usando Supabase.
+
+```tsx
+// app/items/page.tsx
+'use client';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../lib/supabaseClient';
+
+export default function ItemsPage() {
+  const [items, setItems] = useState<any[]>([]);
+  const [newItem, setNewItem] = useState('');
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  async function fetchItems() {
+    const { data } = await supabase.from('items').select('*');
+    setItems(data || []);
+  }
+
+  async function addItem() {
+    if (!newItem) return;
+    await supabase.from('items').insert({ name: newItem });
+    setNewItem('');
+    fetchItems();
+  }
+
+  async function deleteItem(id: number) {
+    await supabase.from('items').delete().eq('id', id);
+    fetchItems();
+  }
+
+  return (
+    <div className="max-w-md mx-auto mt-10">
+      <div className="flex gap-2 mb-4">
+        <input
+          value={newItem}
+          onChange={e => setNewItem(e.target.value)}
+          placeholder="Nuevo item"
+          className="input input-bordered flex-1"
+        />
+        <button className="btn btn-primary" onClick={addItem}>Agregar</button>
+      </div>
+      <ul>
+        {items.map(item => (
+          <li key={item.id} className="flex justify-between py-2">
+            <span>{item.name}</span>
+            <button className="btn btn-sm btn-error" onClick={() => deleteItem(item.id)}>Eliminar</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+Asegúrate de tener la tabla `items` en tu base de datos Supabase:
+
+```sql
+create table items (
+  id serial primary key,
+  name text
+);
+```
