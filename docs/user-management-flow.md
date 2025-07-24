@@ -55,4 +55,49 @@ update profiles set role = 'operator' where id = '<user_id>';
 
 ---
 
+## 6. Seguridad avanzada: RLS y protección de roles
+
+Para que los datos sean realmente seguros y ningún usuario pueda cambiar su propio rol (ni el de otros), debes usar Row Level Security (RLS) en la tabla `profiles`.
+
+- **Cada usuario solo puede ver y editar sus propios datos**, excepto el campo `role`.
+- **Solo los administradores pueden modificar el campo `role`** de cualquier usuario.
+
+### Ejemplo de políticas RLS:
+
+```sql
+-- Habilitar RLS
+aLTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Solo puedes ver/editar tu perfil (excepto el campo role)
+CREATE POLICY "Users can manage own profile" ON profiles
+  FOR ALL
+  USING (auth.uid() = id)
+  WITH CHECK (auth.uid() = id);
+
+-- Función para saber si eres administrador
+create or replace function is_admin() returns boolean as $$
+  select exists (
+    select 1 from profiles where id = auth.uid() and role = 'administrator'
+  );
+$$ language sql stable;
+
+-- Usuarios pueden editar sus datos, excepto el campo role
+CREATE POLICY "Users can update own profile except role" ON profiles
+  FOR UPDATE
+  USING (auth.uid() = id)
+  WITH CHECK (auth.uid() = id AND role = old.role);
+
+-- Solo administradores pueden cambiar el campo role
+CREATE POLICY "Only admin can update role" ON profiles
+  FOR UPDATE
+  USING (is_admin())
+  WITH CHECK (true);
+```
+
+Estas políticas aseguran que:
+- Nadie puede cambiar su propio rol (ni el de otros), salvo los administradores.
+- Los usuarios pueden mantener actualizados sus datos personales.
+
+---
+
 Este flujo asegura que todos los datos extra y el rol se gestionan correctamente y de forma segura en Supabase.

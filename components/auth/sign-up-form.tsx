@@ -16,7 +16,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function SignUpForm({ className, ...props }: Readonly<React.ComponentPropsWithoutRef<'div'>>) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
@@ -45,29 +45,24 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
       return
     }
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/protected`,
+          data:{
+            full_name: fullName,
+            document_type: documentType,
+            document_number: documentNumber,
+            phone_number: phone,
+            role: 'client',
+          },
+          emailRedirectTo: `${window.location.origin}/`,
         },
       })
       if (error) throw error
-      const user = data.user
-      if (user) {
-        // Insertar en profiles
-        const { error: profileError } = await supabase.from('profiles').insert({
-          id: user.id,
-          full_name: fullName,
-          document_type: documentType,
-          document_number: documentNumber,
-          phone: phone,
-          role: 'client',
-        })
-        if (profileError) throw profileError
-      }
       router.push('/auth/sign-up-success')
     } catch (error: unknown) {
+      console.log("🚀 ~ handleSignUp ~ error:", error)
       setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {
       setIsLoading(false)

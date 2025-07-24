@@ -1,14 +1,19 @@
 -- SQL para gestión de roles y datos extra de usuario en Supabase
 -- 1. Crear tabla de perfiles si no existe
-create table if not exists profiles (
-  id uuid primary key references auth.users(id) on delete cascade,
-  full_name text,
-  document_type text,
-  document_number text,
-  phone text,
-  role text default 'client',
-  created_at timestamp with time zone default timezone('utc', now())
-);
+create table if not exists public.profiles (
+  user_id uuid not null,
+  full_name text null,
+  role text not null default 'client'::text,
+  document_number text null,
+  document_type text not null default 'CI'::text,
+  phone_number text null,
+  created_at timestamp with time zone null default now(),
+  last_login timestamp with time zone null,
+  constraint profiles_pkey primary key (user_id),
+  constraint profiles_user_id_fkey foreign KEY (user_id) references auth.users (id) on delete CASCADE
+) TABLESPACE pg_default;
+
+create index IF not exists idx_profiles_role on public.profiles using btree (role) TABLESPACE pg_default;
 
 -- 2. Asegúrate de que la columna 'role' tenga los valores válidos
 -- Puedes usar un constraint CHECK o manejarlo a nivel de aplicación
