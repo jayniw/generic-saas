@@ -20,6 +20,10 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [documentType, setDocumentType] = useState('')
+  const [documentNumber, setDocumentNumber] = useState('')
+  const [phone, setPhone] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -35,9 +39,13 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
       setIsLoading(false)
       return
     }
-
+    if (!fullName || !documentType || !documentNumber || !phone) {
+      setError('Por favor completa todos los campos')
+      setIsLoading(false)
+      return
+    }
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -45,6 +53,19 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
         },
       })
       if (error) throw error
+      const user = data.user
+      if (user) {
+        // Insertar en profiles
+        const { error: profileError } = await supabase.from('profiles').insert({
+          id: user.id,
+          full_name: fullName,
+          document_type: documentType,
+          document_number: documentNumber,
+          phone: phone,
+          role: 'client',
+        })
+        if (profileError) throw profileError
+      }
       router.push('/auth/sign-up-success')
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred')
@@ -63,6 +84,50 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="fullName">Nombre completo</Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  placeholder="Nombre completo"
+                  required
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="documentType">Tipo de documento</Label>
+                <Input
+                  id="documentType"
+                  type="text"
+                  placeholder="CC, CE, PAS..."
+                  required
+                  value={documentType}
+                  onChange={(e) => setDocumentType(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="documentNumber">Número de documento</Label>
+                <Input
+                  id="documentNumber"
+                  type="text"
+                  placeholder="Número de documento"
+                  required
+                  value={documentNumber}
+                  onChange={(e) => setDocumentNumber(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="phone">Teléfono</Label>
+                <Input
+                  id="phone"
+                  type="text"
+                  placeholder="Teléfono"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
