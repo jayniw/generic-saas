@@ -20,19 +20,23 @@ export const metadata: Metadata = {
 import { UserProvider } from "@/context/user-context"
 import { GlobalUserGate } from "@/app/global-user-gate"
 
+import { I18nProvider } from "@/i18n/provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
-          <GlobalUserGate>{children}</GlobalUserGate>
-        </UserProvider>
+        <I18nProvider>
+          <UserProvider>
+            <GlobalUserGate>{children}</GlobalUserGate>
+          </UserProvider>
+        </I18nProvider>
       </body>
     </html>
   );

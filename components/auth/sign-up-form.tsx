@@ -15,8 +15,10 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 export function SignUpForm({ className, ...props }: Readonly<React.ComponentPropsWithoutRef<'div'>>) {
+  const t = useTranslations('signup');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
@@ -73,14 +75,14 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Sign up</CardTitle>
-          <CardDescription>Create a new account</CardDescription>
+          <CardTitle className="text-2xl">{t('title')}</CardTitle>
+          <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="fullName">Nombre completo</Label>
+                <Label htmlFor="fullName">{t('fullName')}</Label>
                 <Input
                   id="fullName"
                   type="text"
@@ -91,7 +93,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="documentType">Tipo de documento</Label>
+                <Label htmlFor="documentType">{t('documentType')}</Label>
                 <Input
                   id="documentType"
                   type="text"
@@ -102,7 +104,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="documentNumber">Número de documento</Label>
+                <Label htmlFor="documentNumber">{t('documentNumber')}</Label>
                 <Input
                   id="documentNumber"
                   type="text"
@@ -113,7 +115,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="phone">Teléfono</Label>
+                <Label htmlFor="phone">{t('phone')}</Label>
                 <Input
                   id="phone"
                   type="text"
@@ -124,7 +126,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('email')}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -136,7 +138,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t('password')}</Label>
                 </div>
                 <Input
                   id="password"
@@ -148,7 +150,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="repeat-password">Repeat Password</Label>
+                  <Label htmlFor="repeat-password">{t('repeatPassword')}</Label>
                 </div>
                 <Input
                   id="repeat-password"
@@ -160,13 +162,13 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Creating an account...' : 'Sign up'}
+                {isLoading ? t('submit') + '...' : t('submit')}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{' '}
+              {t('alreadyAccount')}{' '}
               <Link href="/auth/login" className="underline underline-offset-4">
-                Login
+                {t('login')}
               </Link>
             </div>
           </form>

@@ -1,0 +1,22 @@
+{
+  "signup": {
+    "title": "Crear cuenta",
+    "description": "Regístrate para acceder a la plataforma",
+    "fullName": "Nombre completo",
+    "documentType": "Tipo de documento",
+    "documentNumber": "Número de documento",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "repeatPassword": "Repetir contraseña",
+    "submit": "Registrarse",
+    "alreadyAccount": "¿Ya tienes cuenta?",
+    "login": "Iniciar sesión",
+    "error": {
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "requiredFields": "Por favor completa todos los campos"
+    },
+    "success": "¡Cuenta creada exitosamente!"
+  }
+}
+

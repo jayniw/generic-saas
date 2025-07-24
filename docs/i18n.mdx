@@ -1,0 +1,66 @@
+# Internationalization (i18n) Strategy
+
+This project uses [next-intl](https://github.com/amannn/next-intl) to provide internationalization (i18n) for all user-facing UI. The codebase remains in English, but the interface is shown in Spanish for users.
+
+## Key Points
+
+- **All code and keys are in English.**
+- **UI is shown in Spanish** by default, using translation files.
+- **All i18n files** (messages, provider, config) are in the `/i18n` directory for clarity and maintainability.
+- **The entire app is wrapped** with the i18n provider in `app/layout.tsx` so all routes/components have access to translations.
+
+## How it works
+
+1. **Translation files** are stored in `i18n/messages/es.json` (and can be extended for other languages).
+2. **Message files use nested objects** (not dot-separated keys):
+   ```json
+   {
+     "signup": {
+       "title": "Crear cuenta",
+       "error": {
+         "passwordMismatch": "Las contraseñas no coinciden"
+       }
+     }
+   }
+   ```
+3. **Text in components** is accessed via the `useTranslations` hook from `next-intl`:
+   ```tsx
+   import { useTranslations } from 'next-intl';
+   const t = useTranslations('signup');
+   t('title'); // => 'Crear cuenta'
+   t('error.passwordMismatch'); // => 'Las contraseñas no coinciden'
+   ```
+4. **Providers** are defined in `i18n/provider.tsx` and imported into `app/layout.tsx`:
+   ```tsx
+   import { I18nProvider } from '@/i18n/provider';
+   // ...
+   <I18nProvider>{children}</I18nProvider>
+   ```
+5. **To add a new language**, create a new file in `i18n/messages/` (e.g., `en.json`) and update the provider accordingly.
+
+## Example: Signup Form
+
+- All UI text in the signup form comes from the translation file:
+   ```json
+   // i18n/messages/es.json
+   {
+     "signup": {
+       "fullName": "Nombre completo",
+       "password": "Contraseña"
+     }
+   }
+   ```
+- In the component:
+   ```tsx
+   <Label>{t('fullName')}</Label>
+   <Input placeholder={t('password')} />
+   ```
+
+## Best Practices
+- **Never hardcode UI strings** in components. Always use translation keys.
+- **Keep translation files organized** and in sync across languages.
+- **Document new translation keys** in pull requests or documentation.
+
+---
+
+For more details, see the [next-intl documentation](https://github.com/amannn/next-intl).
