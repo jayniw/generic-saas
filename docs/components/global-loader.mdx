@@ -1,0 +1,49 @@
+---
+title: GlobalLoader
+---
+
+import { GlobalLoader } from "@/components/global-loader"
+
+# GlobalLoader
+
+Componente reutilizable para mostrar un indicador de carga global en la aplicación.
+
+## Propósito
+`GlobalLoader` se utiliza para indicar al usuario que la aplicación está procesando una acción global, como la carga de una página, autenticación, o cualquier operación que requiera esperar.
+
+## Ejemplo de uso
+
+```tsx
+import { GlobalLoader } from "@/components/global-loader";
+
+export default function Loading() {
+  return <GlobalLoader />;
+}
+```
+
+## Vista previa
+
+Puedes renderizar el componente directamente en la documentación si lo deseas:
+
+<GlobalLoader />
+
+## Props
+Actualmente, `GlobalLoader` no recibe props.
+
+## Integración recomendada
+- Coloca el componente en archivos `loading.tsx` de las rutas donde quieras mostrar la pantalla de carga global.
+- Puedes personalizar el diseño del loader modificando el archivo `components/global-loader.tsx`.
+
+## Ejemplo de integración en Next.js
+```tsx
+// app/dashboard/loading.tsx
+import { GlobalLoader } from "@/components/global-loader";
+
+export default function Loading() {
+  return <GlobalLoader />;
+}
+```
+
+## Notas
+- Asegúrate de que el componente esté correctamente exportado como default o named export según tu importación.
+- Si deseas mostrar el loader en otras situaciones (por ejemplo, durante peticiones en formularios), puedes usarlo directamente en el JSX donde lo requieras.

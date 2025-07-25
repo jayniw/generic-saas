@@ -1,9 +1,9 @@
 "use client"
 
-import { NavDocuments } from "@/components/nav-documents"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import { NavDocuments } from "@/components/root/nav-documents"
+import { NavMain } from "@/components/root/nav-main"
+import { NavSecondary } from "@/components/root/nav-secondary"
+import { NavUser } from "@/components/root/nav-user"
 import {
   Sidebar,
   SidebarContent,

@@ -22,11 +22,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { CurrentUserAvatar } from "./current-user-avatar";
-import { LogoutButton } from "./auth/logout-button";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { CurrentUserAvatar } from "@/components/current-user-avatar";
 
 import { useUser } from "@/context/user-context";
-import { GlobalLoader } from "./global-loader";
+import { GlobalLoader } from "@/components/global-loader";
 
 export function NavUser() {
   const { user, loading } = useUser();
@@ -52,7 +52,7 @@ export function NavUser() {
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.email}</span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.name ?? "USERNAME"}
+                  {user.user_metadata?.full_name ?? "USERNAME"}
                 </span>
               </div>
               <IconDotsVertical className="ml-auto size-4" />

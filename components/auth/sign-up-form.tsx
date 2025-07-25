@@ -65,7 +65,7 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
       router.push('/auth/sign-up-success')
     } catch (error: unknown) {
       console.log("🚀 ~ handleSignUp ~ error:", error)
-      setError(error instanceof Error ? error.message : 'An error occurred')
+      setError(error instanceof Error ? error.message : t('error.unknown'))
     } finally {
       setIsLoading(false)
     }

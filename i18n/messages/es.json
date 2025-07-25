@@ -17,6 +17,52 @@
       "requiredFields": "Por favor completa todos los campos"
     },
     "success": "¡Cuenta creada exitosamente!"
+  },
+  "forgotPassword": {
+    "title": "Restablecer contraseña",
+    "description": "Escribe tu correo y te enviaremos un enlace para restablecer tu contraseña",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tucorreo@ejemplo.com",
+    "submit": "Enviar correo de recuperación",
+    "sending": "Enviando...",
+    "successTitle": "Revisa tu correo",
+    "successDescription": "Se enviaron las instrucciones para restablecer la contraseña.",
+    "successInfo": "Si te registraste con email y contraseña, recibirás un correo para restablecer tu contraseña.",
+    "alreadyAccount": "¿Ya tienes cuenta?",
+    "login": "Iniciar sesión",
+    "error": {
+      "unknown": "Ocurrió un error"
+    }
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "description": "Ingresa tu correo electrónico para acceder a tu cuenta",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tucorreo@ejemplo.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "submit": "Acceder",
+    "loggingIn": "Accediendo...",
+    "noAccount": "¿No tienes cuenta?",
+    "signUp": "Regístrate",
+    "error": {
+      "unknown": "Ocurrió un error"
+    }
+  },
+  "logout": {
+    "button": "Cerrar sesión"
+  },
+  "updatePassword": {
+    "title": "Restablecer contraseña",
+    "description": "Por favor ingresa tu nueva contraseña abajo.",
+    "passwordLabel": "Nueva contraseña",
+    "passwordPlaceholder": "Nueva contraseña",
+    "submit": "Guardar nueva contraseña",
+    "saving": "Guardando...",
+    "error": {
+      "unknown": "Ocurrió un error"
+    }
   }
 }
 

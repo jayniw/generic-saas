@@ -15,8 +15,10 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+  const t = useTranslations('login');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -35,10 +37,9 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
         password,
       })
       if (error) throw error
-      // Redirige al dashboard después de login exitoso
       router.push('/dashboard')
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : 'An error occurred')
+      setError(error instanceof Error ? error.message : t('error.unknown'))
     } finally {
       setIsLoading(false)
     }
@@ -48,18 +49,18 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account</CardDescription>
+          <CardTitle className="text-2xl">{t('title')}</CardTitle>
+          <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('emailLabel')}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder={t('emailPlaceholder')}
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -67,17 +68,18 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t('passwordLabel')}</Label>
                   <Link
                     href="/auth/forgot-password"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {t('forgotPassword')}
                   </Link>
                 </div>
                 <Input
                   id="password"
                   type="password"
+                  placeholder={t('passwordPlaceholder')}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -85,13 +87,13 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Logging in...' : 'Login'}
+                {isLoading ? t('loggingIn') : t('submit')}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{' '}
+              {t('noAccount')}{' '}
               <Link href="/auth/sign-up" className="underline underline-offset-4">
-                Sign up
+                {t('signUp')}
               </Link>
             </div>
           </form>
