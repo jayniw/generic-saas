@@ -34,7 +34,7 @@ export function NavMain({
             </SidebarMenuButton>
             <Button
               size="icon"
-              className="size-8 group-data-[collapsible=icon]:opacity-0"
+              className="size-8 group-data-[collapsible=icon]:opacity-0 bg-secondary text-secondary-foreground hover:bg-secondary/90 hover:text-secondary-foreground active:bg-secondary/90 active:text-secondary-foreground"
               variant="outline"
             >
               <IconMail />
