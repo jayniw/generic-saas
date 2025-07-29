@@ -5,9 +5,17 @@ import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
 
+import * as React from "react";
+
 export function ModeToggle() {
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted || !resolvedTheme) return null;
+
+  const isDark = resolvedTheme === "dark";
 
   const handleToggle = () => {
     setTheme(isDark ? "light" : "dark");

@@ -4,6 +4,40 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* fallback para legacy browsers */
+  --background: #b5d0db;
+  --foreground: #22223b;
+  --card: #ffffff;
+  --card-foreground: #22223b;
+  --popover: #ffffff;
+  --popover-foreground: #22223b;
+  --primary: #1cb5b4;
+  --primary-foreground: #ffffff;
+  --secondary: #7b4c96;
+  --secondary-foreground: #ffffff;
+  --muted: #a2b8c5;
+  --muted-foreground: #7b4c96;
+  --accent: #1cb5b4;
+  --accent-foreground: #ffffff;
+  --destructive: #e4572e;
+  --destructive-foreground: #ffffff;
+  --border: #d0e0eb;
+  --input: #d0e0eb;
+  --ring: #a2b8c5;
+  --chart-1: #7baaf7;
+  --chart-2: #6e83e6;
+  --chart-3: #5e6fd6;
+  --chart-4: #545dc2;
+  --chart-5: #4b4e9e;
+  --sidebar: #eaf6fa;
+  --sidebar-foreground: #22223b;
+  --sidebar-primary: #1cb5b4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #a2b8c5;
+  --sidebar-accent-foreground: #22223b;
+  --sidebar-border: #d0e0eb;
+  --sidebar-ring: #a2b8c5;
+
   --background: oklch(0.9786 0.0055 211.0391);
   --foreground: oklch(0.1450 0 0);
   --card: oklch(1 0 0);
@@ -53,6 +87,40 @@
 }
 
 .dark {
+  /* fallback para legacy browsers */
+  --background: #22223b;
+  --foreground: #b5d0db;
+  --card: #23263a;
+  --card-foreground: #b5d0db;
+  --popover: #23263a;
+  --popover-foreground: #b5d0db;
+  --primary: #1cb5b4;
+  --primary-foreground: #ffffff;
+  --secondary: #7b4c96;
+  --secondary-foreground: #ffffff;
+  --muted: #3a3d5c;
+  --muted-foreground: #b5d0db;
+  --accent: #7b4c96;
+  --accent-foreground: #ffffff;
+  --destructive: #e4572e;
+  --destructive-foreground: #ffffff;
+  --border: #23263a;
+  --input: #23263a;
+  --ring: #7b4c96;
+  --chart-1: #7baaf7;
+  --chart-2: #6e83e6;
+  --chart-3: #5e6fd6;
+  --chart-4: #545dc2;
+  --chart-5: #4b4e9e;
+  --sidebar: #23263a;
+  --sidebar-foreground: #b5d0db;
+  --sidebar-primary: #1cb5b4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #3a3d5c;
+  --sidebar-accent-foreground: #b5d0db;
+  --sidebar-border: #23263a;
+  --sidebar-ring: #7b4c96;
+
   --background: oklch(0.1450 0 0);
   --foreground: oklch(0.9850 0 0);
   --card: oklch(0.2050 0 0);
