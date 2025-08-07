@@ -1,4 +1,2 @@
 // Rutas públicas que no requieren autenticación
-export const PUBLIC_ROUTES = [
-  "/auth/",
-]
+export const PUBLIC_ROUTES = ["/auth/"] as const;

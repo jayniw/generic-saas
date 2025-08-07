@@ -50,10 +50,9 @@ export function NavUser() {
             >
               <CurrentUserAvatar />
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.email}</span>
-                <span className="text-muted-foreground truncate text-xs">
-                  {user.user_metadata?.full_name ?? "USERNAME"}
-                </span>
+                <span className="truncate font-medium">{user.user_metadata?.full_name}</span>
+                <span className="text-muted-foreground truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs text-secondary">{user.user_metadata?.role?.toUpperCase()}</span>
               </div>
               <IconDotsVertical className="ml-auto size-4" />
             </SidebarMenuButton>

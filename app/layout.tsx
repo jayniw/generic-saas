@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 
 
 import ClientLayout from "@/components/client-layout";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({
   children,
@@ -35,6 +36,7 @@ export default function RootLayout({
         <ClientLayout>
           {children}
         </ClientLayout>
+        <Toaster />
       </body>
     </html>
   );

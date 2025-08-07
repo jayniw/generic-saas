@@ -47,24 +47,39 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
       return
     }
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data:{
+          data: {
             full_name: fullName,
             document_type: documentType,
             document_number: documentNumber,
             phone_number: phone,
+            email: email,
             role: 'client',
           },
           emailRedirectTo: `${window.location.origin}/`,
         },
       })
-      if (error) throw error
-      router.push('/auth/sign-up-success')
+      
+      console.log("🚀 ~ handleSignUp ~ data:", data)
+      if (error) {
+        // Manejar errores específicos de Supabase
+        if (error.message.includes('already registered')) {
+          setError('Este correo electrónico ya está registrado')
+        } else {
+          throw error
+        }
+      } else if (data?.user?.identities?.length === 0) {
+        // Si no se crearon identidades, probablemente el usuario ya existe
+        setError('Este correo electrónico ya está registrado')
+      } else {
+        // Solo redirigir si el registro fue exitoso
+        router.push('/auth/sign-up-success')
+      }
     } catch (error: unknown) {
-      console.log("🚀 ~ handleSignUp ~ error:", error)
+      console.error("Error en el registro:", error)
       setError(error instanceof Error ? error.message : t('error.unknown'))
     } finally {
       setIsLoading(false)
