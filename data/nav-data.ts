@@ -19,8 +19,9 @@ export const navData = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: IconDashboard,
+      role:[]
     },
     {
       title: "Lifecycle",
@@ -38,9 +39,10 @@ export const navData = {
       icon: IconFolder,
     },
     {
-      title: "Team",
-      url: "#",
+      title: "Users",
+      url: "/users",
       icon: IconUsers,
+      role:["admin"]
     },
   ],
   navClouds: [

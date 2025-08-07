@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function LoginForm({ className, ...props }: Readonly<React.ComponentPropsWithoutRef<'div'>>) {
   const t = useTranslations('login');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

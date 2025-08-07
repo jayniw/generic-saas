@@ -1,25 +1,40 @@
 "use client"
 
-import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
-
+import { IconCirclePlusFilled, IconMail } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
-import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
+import Link from "next/link"
+import { useUser } from "@/context/user-context"
+import { useMemo, ComponentType, SVGProps } from "react"
 
-export function NavMain({
-  items,
-}: Readonly<{
-  items: {
-    title: string
-    url: string
-    icon?: Icon
-  }[]
-}>) {
+type NavItem = {
+  title: string
+  url: string
+  icon?: ComponentType<SVGProps<SVGSVGElement>>
+  role?: string[]
+}
+
+export function NavMain({ items }: Readonly<{ items: NavItem[] }>) {
+  const { user } = useUser()
+  
+  const filteredItems = useMemo(() => {
+    if (!user) return [];
+    
+    const userRole = user.user_metadata?.role || 'client';
+    
+    return items.filter(item => {
+      // If no role is specified, the item is visible to everyone
+      if (!item.role || item.role.length === 0) return true;
+
+      // Check if user's role is in the allowed roles for this item
+      return item.role.includes(userRole);
+    });
+  }, [items, user]);
+
+  if (!user) {
+    return null
+  }
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -34,8 +49,8 @@ export function NavMain({
             </SidebarMenuButton>
             <Button
               size="icon"
-              className="size-8 group-data-[collapsible=icon]:opacity-0 bg-secondary text-secondary-foreground hover:bg-secondary/90 hover:text-secondary-foreground active:bg-secondary/90 active:text-secondary-foreground"
-              variant="outline"
+              className="size-8 group-data-[collapsible=icon]:opacity-0"
+              variant="secondary"
             >
               <IconMail />
               <span className="sr-only">Inbox</span>
@@ -43,11 +58,13 @@ export function NavMain({
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => (
+          {filteredItems.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
+                <Link href={item.url} className="flex items-center">
+                  {item.icon && <item.icon className="mr-2 h-4 w-4" />}
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

@@ -27,6 +27,7 @@ import { CurrentUserAvatar } from "@/components/current-user-avatar";
 
 import { useUser } from "@/context/user-context";
 import { GlobalLoader } from "@/components/global-loader";
+import Link from "next/link";
 
 export function NavUser() {
   const { user, loading } = useUser();
@@ -65,16 +66,18 @@ export function NavUser() {
           >
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <IconUserCircle />
-                Account
+                <Link href="/users" className="flex items-center">
+                  <IconUserCircle className="mr-2 h-4 w-4" />
+                  Perfil
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <IconCreditCard />
-                Billing
+                Facturación
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <IconNotification />
-                Notifications
+                Notificaciones
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

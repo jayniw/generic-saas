@@ -62,8 +62,6 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
           emailRedirectTo: `${window.location.origin}/`,
         },
       })
-      
-      console.log("🚀 ~ handleSignUp ~ data:", data)
       if (error) {
         // Manejar errores específicos de Supabase
         if (error.message.includes('already registered')) {

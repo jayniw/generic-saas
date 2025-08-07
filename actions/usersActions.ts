@@ -33,10 +33,6 @@ export async function getAllUsersWithProfiles(): Promise<UserProfile[]> {
 export async function updateUserProfile(userId: string, updates: Partial<UserProfile>,updatedBy: string) {
   const supabase = createClient();
 
-  // const { data: { user: currentUser } } = await supabase.auth.getUser();
-  // console.log("🚀 ~ updateUserProfile ~ currentUser:", currentUser)
-  // const updatedBy = currentUser?.id || 'system';
-
   // Prepare the data for the profiles table
   const profileUpdates = {
     full_name: updates.fullName,
