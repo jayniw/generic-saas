@@ -4,7 +4,7 @@ type DocumentType = {
 }
 
 export const documentTypes: DocumentType[] = [
-  {value: 'NIT', label: 'NIT'},
   {value: 'CI', label: 'CI'},
+  {value: 'NIT', label: 'NIT'},
   {value: 'PASSPORT', label: 'Pasaporte'},
 ];

@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { documentTypes } from '@/data/document-type'
 
 export function SignUpForm({ className, ...props }: Readonly<React.ComponentPropsWithoutRef<'div'>>) {
   const t = useTranslations('signup');
@@ -106,26 +107,31 @@ export function SignUpForm({ className, ...props }: Readonly<React.ComponentProp
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="documentType">{t('documentType')}</Label>
-                <Input
-                  id="documentType"
-                  type="text"
-                  placeholder="CC, CE, PAS..."
-                  required
-                  value={documentType}
-                  onChange={(e) => setDocumentType(e.target.value)}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="documentNumber">{t('documentNumber')}</Label>
-                <Input
-                  id="documentNumber"
-                  type="text"
-                  placeholder="Número de documento"
-                  required
-                  value={documentNumber}
-                  onChange={(e) => setDocumentNumber(e.target.value)}
-                />
+                <Label>{t('documentNumber')}</Label>
+                <div className="flex gap-2">
+                  <select
+                    id="documentType"
+                    className="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-1/3 min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                    required
+                    value={documentType}
+                    onChange={(e) => setDocumentType(e.target.value)}
+                  >
+                    {documentTypes.map((docType) => (
+                      <option key={docType.value} value={docType.value}>
+                        {docType.label}
+                      </option>
+                    ))}
+                  </select>
+                  <Input
+                    id="documentNumber"
+                    type="text"
+                    className="w-2/3"
+                    placeholder="Número de documento"
+                    required
+                    value={documentNumber}
+                    onChange={(e) => setDocumentNumber(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="phone">{t('phone')}</Label>
